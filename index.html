@@ -393,9 +393,9 @@
       object-fit: cover;
       display: block;
     }
-    .photo-card.tall { grid-row: span 2; }
-    .photo-card.tall img { height: 100%; min-height: 340px; }
-    .photo-card:not(.tall) img { height: 180px; }
+    .photo-card.wide { grid-column: span 2; }
+    .photo-card.wide img { height: 320px; width: 100%; }
+    .photo-card:not(.wide) img { height: 220px; }
 
     /* Fallback if image doesn't load */
     .photo-placeholder {
@@ -438,8 +438,8 @@
     @media (max-width: 768px) {
       .welcome-grid { grid-template-columns: 1fr; gap: 40px; }
       .photo-grid { grid-template-columns: 1fr 1fr; }
-      .photo-card.tall { grid-row: span 1; }
-      .photo-card.tall img { min-height: 200px; }
+      .photo-card.wide { grid-column: span 2; }
+      .photo-card.wide img { height: 240px; }
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -911,6 +911,20 @@
       transition: transform .4s ease;
     }
     .gallery-strip-photo:hover img { transform: scale(1.06); }
+    .gallery-strip-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+      cursor: pointer;
+    }
+    .gallery-strip-placeholder svg { opacity: .25; width: 28px; height: 28px; }
+    .gallery-strip-placeholder span {
+      font-family: 'DM Mono', monospace; font-size: 9px;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; padding: 0 8px;
+    }
+    .gallery-strip-photo { cursor: pointer; }
 
     /* ═══════════════════════════════════════════════════════
        FOOTER
@@ -1125,14 +1139,26 @@
           </div>
         </div>
 
-        <!-- Photo Grid — 3 group shots -->
+        <!-- Photo Grid — 3 group shots: wide on top, two below -->
         <div class="photo-grid fade-in">
-          <!-- Tall left: branded 7-Fig CEO image -->
-          <div class="photo-card tall" data-drop-slot="branded">
-            <img src="" alt="IFCA 7-Figure CEO — Cancun April 14–17" style="display:none;">
-            <div class="photo-placeholder" style="min-height:340px;">
+          <!-- TOP: wide horizontal community photo spanning both columns -->
+          <div class="photo-card wide" data-drop-slot="community">
+            <img src="" alt="IFCA 7-Figure CEO Community" style="display:none;">
+            <div class="photo-placeholder" style="min-height:320px;">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <p>Click or drop<br>7-Figure CEO branded photo</p>
+              <p>Click or drop<br>Group photo (top — wide)</p>
+            </div>
+            <div class="drop-hint">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span>Click or drop photo here</span>
+            </div>
+          </div>
+          <!-- BOTTOM LEFT: branded photo -->
+          <div class="photo-card" data-drop-slot="branded">
+            <img src="" alt="IFCA 7-Figure CEO — Cancun April 14–17" style="display:none;">
+            <div class="photo-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <p>Click or drop<br>Branded 7-Fig photo</p>
             </div>
             <div class="drop-hint">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -1140,24 +1166,12 @@
             </div>
             <div class="photo-badge">7-Figure CEO · Cancun 2026</div>
           </div>
-          <!-- Top right: agenda group -->
+          <!-- BOTTOM RIGHT: agenda photo -->
           <div class="photo-card" data-drop-slot="agenda">
             <img src="" alt="IFCA 7-Figure CEO Mastermind Group" style="display:none;">
             <div class="photo-placeholder">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               <p>Click or drop<br>Agenda group photo</p>
-            </div>
-            <div class="drop-hint">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span>Click or drop photo here</span>
-            </div>
-          </div>
-          <!-- Bottom right: outdoor group -->
-          <div class="photo-card" data-drop-slot="community">
-            <img src="" alt="IFCA 7-Figure CEO Community" style="display:none;">
-            <div class="photo-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <p>Click or drop<br>Community group photo</p>
             </div>
             <div class="drop-hint">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -1383,23 +1397,69 @@
       <h3 class="bebas" style="font-size: 32px; color: var(--text-primary);">Your Home for the Week</h3>
     </div>
     <div class="gallery-strip-inner">
-      <div class="gallery-strip-photo">
-        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Resort Pool" loading="lazy">
+      <div class="gallery-strip-photo" data-drop-slot="resort1">
+        <img src="" alt="Secrets The Vine — Ocean View Room" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Ocean View Room</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
       </div>
-      <div class="gallery-strip-photo">
-        <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=600&q=80" alt="Caribbean Beach" loading="lazy">
+      <div class="gallery-strip-photo" data-drop-slot="resort2">
+        <img src="" alt="Secrets The Vine — Pool Bar" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Pool Bar</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
       </div>
-      <div class="gallery-strip-photo">
-        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Luxury Suite" loading="lazy">
+      <div class="gallery-strip-photo" data-drop-slot="resort3">
+        <img src="" alt="Secrets The Vine — Lobby Bar" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Lobby Bar</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
       </div>
-      <div class="gallery-strip-photo">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine Dining" loading="lazy">
+      <div class="gallery-strip-photo" data-drop-slot="resort4">
+        <img src="" alt="Secrets The Vine — Suite at Dusk" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Suite at Dusk</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
       </div>
-      <div class="gallery-strip-photo">
-        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80" alt="Resort Exterior" loading="lazy">
+      <div class="gallery-strip-photo" data-drop-slot="resort5">
+        <img src="" alt="Secrets The Vine — Rooftop Pool Night" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Rooftop Pool — Night</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
       </div>
-      <div class="gallery-strip-photo">
-        <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600&q=80" alt="Poolside" loading="lazy">
+      <div class="gallery-strip-photo" data-drop-slot="resort6">
+        <img src="" alt="Secrets The Vine — Spin Class" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Fitness — Ocean View</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
+      </div>
+      <div class="gallery-strip-photo" data-drop-slot="resort7">
+        <img src="" alt="Secrets The Vine — Restaurant" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Restaurant</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
+      </div>
+      <div class="gallery-strip-photo" data-drop-slot="resort8">
+        <img src="" alt="Secrets The Vine — Full Gym" style="display:none;">
+        <div class="gallery-strip-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Full Gym — Ocean View</span>
+        </div>
+        <div class="drop-hint"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Drop photo</span></div>
       </div>
     </div>
   </div>
@@ -1473,8 +1533,8 @@
       <div class="ref-block fade-in">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
         <div>
-          <div class="ref-block-label">Group Reservation Reference</div>
-          <div class="ref-block-value">G-3593-11 — Secrets The Vine Cancun · IFCA 7-Figure CEO Mastermind</div>
+          <div class="ref-block-label">Group Reservation — Reference Name</div>
+          <div class="ref-block-value">When booking or checking in, reference group name: <strong>IFCA</strong></div>
         </div>
       </div>
 
